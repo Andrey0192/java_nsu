@@ -31,7 +31,7 @@ public class DatabaseClientGui extends Application {
     @Override
     public void start(Stage stage) {
         mgr = new DatabaseManager("storage");
-        // Left pane: list of tables
+        // Left pane
         tablesList = new ListView<>();
         refreshTables();
         tablesList.getSelectionModel().selectedItemProperty().addListener((_,_,sel) -> {
@@ -239,7 +239,6 @@ public class DatabaseClientGui extends Application {
 //        }
 //    }
 
-    // Сделайте так:
     private void chooseAndImportCSV() {
         String tbl = tablesList.getSelectionModel().getSelectedItem();
         if (tbl == null) {
@@ -254,7 +253,6 @@ public class DatabaseClientGui extends Application {
         }
     }
 
-    // Аналогично для экспорта:
     private void chooseAndExportCSV() {
         String tbl = tablesList.getSelectionModel().getSelectedItem();
         if (tbl == null) {
