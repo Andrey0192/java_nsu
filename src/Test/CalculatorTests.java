@@ -1,6 +1,7 @@
 package Test;
 
-import Exeptionals.CommandExecutionException;
+import commands.ExecutionContext;
+import exceptions.CommandExecutionException;
 import commands.AddCommand;
 import commands.Command;
 import org.junit.Test;
@@ -14,24 +15,24 @@ public class CalculatorTests {
 
     @Test
     public void testAddCommand() {
-        Stack<Double> stack = new Stack<>();
-        HashMap<String, Double> definitions = new HashMap<>();
-        stack.push(2.0);
-        stack.push(3.0);
+        ExecutionContext context = new ExecutionContext();
+
+        context.getStack().push(2.0);
+        context.getStack().push(3.0);
 
         Command addCommand = new AddCommand();
-        addCommand.execute(stack, definitions);
+        addCommand.execute(context);
 
-        assertEquals(5.0, stack.peek(), 0.01);
+        assertEquals(5.0, context.getStack().peek(), 0.01);
     }
 
     @Test(expected = CommandExecutionException.class)
     public void testAddCommandInsufficientStackElements() {
-        Stack<Double> stack = new Stack<>();
-        HashMap<String, Double> definitions = new HashMap<>();
-        stack.push(2.0);
+        ExecutionContext context = new ExecutionContext();
+
+        context.getStack().push(2.0);
 
         Command addCommand = new AddCommand();
-        addCommand.execute(stack, definitions);
+        addCommand.execute(context);
     }
 }

@@ -1,17 +1,17 @@
 import commands.Command;
 import commands.CommandFactory;
+import commands.ExecutionContext;
 
 import java.io.*;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Stack;
 
 public class Main {
     public static void main(String[] args) {
-        Stack<Double> stack = new Stack<>();
-        HashMap<String, Double> definitions = new HashMap<>();
-        CommandFactory factory = new CommandFactory();
+
+        String fileName = "commands_config.properties";
+        CommandFactory factory = new CommandFactory(fileName);
         BufferedReader in = null;
+        ExecutionContext context = new ExecutionContext();
 
         try {
             if (args.length > 0) {
@@ -22,6 +22,7 @@ public class Main {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+
         String line;
         try {
             while ((line = in.readLine()) != null) {
@@ -29,7 +30,7 @@ public class Main {
                 String commandName = tokens[0];
                 Command command = factory.createCommand(commandName);
                 String[] commandArgs = Arrays.copyOfRange(tokens, 1, tokens.length);
-                command.execute(stack, definitions, commandArgs);
+                command.execute(context, commandArgs);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

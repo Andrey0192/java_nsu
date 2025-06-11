@@ -1,19 +1,23 @@
 package commands;
 
-import java.util.HashMap;
-import java.util.Stack;
+import exceptions.CommandExecutionException;
+
 
 public class PrintCommands extends AbstractCommand{
     public PrintCommands() {
         super("print");
     }
     @Override
-    public void execute(Stack<Double> stack, HashMap<String, Double> definitions, String... args) {
-        if (stack.isEmpty()) {
-            System.err.println("Ошибка: недостаточно элементов в стеке для операции PRINT");
-            return;
+    public void execute(ExecutionContext context, String... args) {
+
+        if (context.getStack().isEmpty()) {
+            logError("Ошибка: " +
+                    "недостаточно элементов в стеке для операции PRINT");
+            throw new CommandExecutionException("Ошибка: " +
+                   "недостаточно элементов в стеке для операции PRINT");
         }
-        double result = stack.peek();
-        System.out.println("Результат операции PRINT: " + result);
+
+        double result = context.getStack().peek();
+       logInfo("Результат операции PRINT: " + result);
     }
 }

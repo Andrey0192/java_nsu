@@ -1,7 +1,6 @@
 package commands;
 
-import java.util.HashMap;
-import java.util.Stack;
+import exceptions.CommandExecutionException;
 
 public class SqrtCommand extends AbstractCommand {
     public SqrtCommand() {
@@ -9,13 +8,22 @@ public class SqrtCommand extends AbstractCommand {
     }
 
     @Override
-    public void execute(Stack<Double> stack, HashMap<String, Double> definitions, String... args) {
-        if (stack.isEmpty()) {
-            System.err.println("Ошибка: недостаточно элементов в стеке для операции sqrt");
-            return;
+    public void execute(ExecutionContext context, String... args) {
+
+        if (context.getStack().isEmpty()) {
+            logError("Ошибка: недостаточно элементов в стеке для операции sqrt");
+            throw new CommandExecutionException("Ошибка: недостаточно элементов в стеке для операции sqrt");
         }
-        double result = Math.sqrt(stack.pop());
-        stack.push(result);
-        System.out.println("Результат операции sqrt: " + result);
+
+        double aDouble = context.getStack().pop();
+        if (aDouble < 0) {
+            logError("Ошибка: число отрицательное");
+            throw new CommandExecutionException("Ошибка: число отрицательное");
+
+        }
+
+        double result = Math.sqrt(aDouble);
+        context.getStack().push(result);
+        logInfo("Результат операции sqrt: " + result);
     }
 }

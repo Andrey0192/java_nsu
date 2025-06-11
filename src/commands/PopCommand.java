@@ -1,7 +1,7 @@
 package commands;
 
-import java.util.HashMap;
-import java.util.Stack;
+import exceptions.CommandExecutionException;
+
 
 public class PopCommand extends AbstractCommand {
     public PopCommand() {
@@ -9,14 +9,17 @@ public class PopCommand extends AbstractCommand {
     }
 
     @Override
-    public void execute(Stack<Double> stack, HashMap<String, Double> definitions, String... args) {
-        if (definitions.isEmpty()) {
-            System.err.println("Ошибка: недостаточно элементов в definitions для операции PUSH");
-            return;
+    public void execute(ExecutionContext context, String... args) {
+        if (context.getDefenitions().isEmpty()) {
+            logError("Ошибка: " +
+                    "недостаточно элементов в стеке для операции POP");
+
+           throw new CommandExecutionException("Ошибка: " +
+                   "недостаточно элементов в definitions для операции POP");
         }
-        double result = stack.pop();
-        definitions.put(args[0], result);
-        System.out.println("Результат операции POP : " + args[0] +" = " + result + " cнято с stack");
+        double result = context.getStack().pop();
+        context.getDefenitions().put(args[0], result);
+       logInfo("Результат операции POP : " + args[0] +" = " + result + " cнято с context.getStack()");
     }
 }
 

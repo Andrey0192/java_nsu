@@ -1,7 +1,7 @@
 package commands;
 
-import java.util.HashMap;
-import java.util.Stack;
+import exceptions.CommandExecutionException;
+
 
 public class DivCommand extends AbstractCommand {
     public DivCommand() {
@@ -9,20 +9,26 @@ public class DivCommand extends AbstractCommand {
     }
 
     @Override
-    public void execute(Stack<Double> stack, HashMap<String, Double> definitions, String... args) {
-        if (stack.size() < 2) {
-            System.err.println("Ошибка: недостаточно элементов в стеке для операции +");
-            return;
+    public void execute(ExecutionContext context, String... args) {
+
+        if (context.getStack().size() < 2) {
+            logError("Ошибка: " +
+                    "недостаточно элементов в стеке для операции /");
+            throw new CommandExecutionException("Ошибка: " +
+                    "недостаточно элементов в стеке для операции /");
         }
-        double a = stack.pop();
-        if (stack.peek()  == 0 ){
-            stack.push(a);
-            System.err.println("Ошибка: b == 0 ");
-            return;
+        double a = context.getStack().pop();
+
+        if (context.getStack().peek()  == 0 ){
+            context.getStack().push(a);
+            throw new CommandExecutionException("Ошибка: b == 0 ");
         }
-        double b = stack.pop();
+
+        double b = context.getStack().pop();
         double result = a /  b;
-        stack.push(result);
-        System.out.println("Результат операции +: " + result);
+
+        context.getStack().push(result);
+
+        logInfo("Результат операции / : "  + result);
     }
 }

@@ -1,7 +1,7 @@
 package commands;
 
-import Exeptionals.CommandCreationException;
-import Exeptionals.CommandNotFoundException;
+import exceptions.CommandCreationException;
+import exceptions.CommandNotFoundException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,13 +11,13 @@ import java.util.Properties;
 public class CommandFactory {
     private HashMap<String, String> commandMappings = new HashMap<>();
 
-    public CommandFactory() {
-        commandMappings = loadCommandMappinds();
+    public CommandFactory(String fileName) {
+        commandMappings = loadCommandMappings(fileName);
     }
 
-    private HashMap<String, String> loadCommandMappinds() {
+    private HashMap<String, String> loadCommandMappings(String fileName) {
         HashMap<String, String> commandMappings = new HashMap<>();
-        try ( InputStream in = getClass().getResourceAsStream("commands_config.properties")) {
+        try ( InputStream in = getClass().getResourceAsStream(fileName)) {
             Properties prop = new Properties();
             prop.load(in);
             for (String cmd : prop.stringPropertyNames()) {

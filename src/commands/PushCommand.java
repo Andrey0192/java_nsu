@@ -1,7 +1,7 @@
 package commands;
 
-import java.util.HashMap;
-import java.util.Stack;
+import exceptions.CommandExecutionException;
+
 
 public class PushCommand extends AbstractCommand {
     public PushCommand() {
@@ -9,14 +9,20 @@ public class PushCommand extends AbstractCommand {
     }
 
     @Override
-    public void execute(Stack<Double> stack, HashMap<String, Double> definitions, String... args) {
-        if (definitions.isEmpty()) {
-            System.err.println("Ошибка: недостаточно элементов в definitions для операции PUSH");
-            return;
+    public void execute(ExecutionContext context, String... args) {
+
+        if (context.getDefenitions().isEmpty()) {
+            logError("Ошибка: " +
+                    "недостаточно элементов в стеке для операции PUSH");
+            throw new CommandExecutionException("Ошибка: " +
+                   "недостаточно элементов в definitions для операции PUSH");
+
         }
-        double result = definitions.get(args[0]);
-        stack.push(result);
-        System.out.println("Результат операции PUSH : " + args[0] +" = " + result + " Добавлено в stack");
+        double result = context.getDefenitions().get(args[0]);
+        context.getStack().push(result);
+       logInfo("Результат операции PUSH : " + args[0] +" = " + result + " Добавлено в context.getStack()");
     }
+
+    
 }
 

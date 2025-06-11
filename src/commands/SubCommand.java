@@ -1,7 +1,7 @@
 package commands;
 
-import java.util.HashMap;
-import java.util.Stack;
+import exceptions.CommandExecutionException;
+
 
 public class SubCommand extends AbstractCommand{
     public SubCommand() {
@@ -9,13 +9,19 @@ public class SubCommand extends AbstractCommand{
     }
 
     @Override
-    public void execute(Stack<Double> stack, HashMap<String, Double> definitions,String... args) {
-        if (stack.size() < 2) {
-            return;
+    public void execute(ExecutionContext context,String... args) {
+
+        if (context.getStack().size() < 2) {
+            logError("Ошибка: " +
+                    "недостаточно элементов в стеке для операции -");
+            throw new CommandExecutionException("Ошибка: " +
+                    "недостаточно элементов в стеке для операции -");
         }
-        double result = stack.pop() - stack.pop();
-        stack.push(result);
-        System.out.println("Результат операции +: " + result);
+
+        double result = context.getStack().pop() - context.getStack().pop();
+        context.getStack().push(result);
+
+        logInfo("Результат операции -: " + result);
     }
 }
 

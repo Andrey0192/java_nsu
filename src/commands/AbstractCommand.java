@@ -3,33 +3,33 @@ import java.util.logging.*;
 
 abstract class AbstractCommand implements Command , Logging{
     protected String commandName;
-
+    private static final Logger logger = Logger.getLogger(AbstractCommand.class.getName());
     public AbstractCommand(String commandName) {
         this.commandName = commandName;
     }
 
     @Override
     public void logInfo(String message) {
-        Logger.getLogger(this.getClass().getName()).log(Level.INFO, message);
+        logger.log(Level.INFO, message);
     }
 
     @Override
     public void logInfo(String message, Throwable e) {
-        Logger.getLogger(this.getClass().getName()).log(Level.INFO, message, e);
+        logger.log(Level.INFO, message, e);
     }
 
     @Override
     public void logError(String message) {
-        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, message);
+        logger.log(Level.SEVERE, message);
     }
 
     @Override
     public void logError(String message, Throwable e) {
-        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, message, e);
+        logger.log(Level.SEVERE, message, e);
     }
 
     @Override
     public void logExeption(Exception ex) {
-        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
+        logger.log(Level.SEVERE, ex.getMessage(), ex);
     }
 }
