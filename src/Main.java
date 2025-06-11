@@ -1,6 +1,6 @@
 import commands.Command;
-import commands.CommandFactory;
-import commands.ExecutionContext;
+import factory.CommandFactory;
+import factory.ExecutionContext;
 
 import java.io.*;
 import java.util.Arrays;

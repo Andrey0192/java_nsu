@@ -1,5 +1,6 @@
 package commands;
 
+import factory.ExecutionContext;
 import exceptions.CommandExecutionException;
 
 
@@ -18,6 +19,7 @@ public class PushCommand extends AbstractCommand {
                    "недостаточно элементов в definitions для операции PUSH");
 
         }
+
         double result = context.getDefenitions().get(args[0]);
         context.getStack().push(result);
        logInfo("Результат операции PUSH : " + args[0] +" = " + result + " Добавлено в context.getStack()");

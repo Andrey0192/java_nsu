@@ -1,7 +1,9 @@
 package commands;
+import logging.Logging;
+
 import java.util.logging.*;
 
-abstract class AbstractCommand implements Command , Logging{
+abstract class AbstractCommand implements Command , Logging {
     protected String commandName;
     private static final Logger logger = Logger.getLogger(AbstractCommand.class.getName());
     public AbstractCommand(String commandName) {
@@ -28,8 +30,5 @@ abstract class AbstractCommand implements Command , Logging{
         logger.log(Level.SEVERE, message, e);
     }
 
-    @Override
-    public void logExeption(Exception ex) {
-        logger.log(Level.SEVERE, ex.getMessage(), ex);
-    }
+
 }

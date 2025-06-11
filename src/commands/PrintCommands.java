@@ -1,5 +1,6 @@
 package commands;
 
+import factory.ExecutionContext;
 import exceptions.CommandExecutionException;
 
 
@@ -18,6 +19,7 @@ public class PrintCommands extends AbstractCommand{
         }
 
         double result = context.getStack().peek();
+        System.out.println(result);
        logInfo("Результат операции PRINT: " + result);
     }
 }
